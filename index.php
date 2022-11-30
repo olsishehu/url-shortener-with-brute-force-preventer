@@ -74,6 +74,8 @@ function outFunc() {
 
 include("config.php");
 
+
+
 $HITS_PER_TIME = 40;
 $TIME = 1; #minutes
 $BAN_TIME = 10; #minutes
@@ -164,9 +166,15 @@ if (isset($_GET['url']) && $_GET['url']!="")
             }
         }
         
+        #crete table if doesn't exist
+        $query = "CREATE TABLE IF NOT EXISTS `url_shorten` ( `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, `url` tinytext NOT NULL, `short_code` varchar(50) NOT NULL, `hits` int(11) NOT NULL, `added_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;";
+        $conn->query($query);
         
+        $query = "CREATE TABLE IF NOT EXISTS `ip_list` ( `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, `ip` varchar(15) NOT NULL, `hits` int(11) NOT NULL, `added_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;";
+        $conn->query($query);
   
         $conn->close();
+        
 
         //echo $base_url.$slug;
 
